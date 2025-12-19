@@ -33,8 +33,7 @@ jobs:
           file: ./frontend/Dockerfile
           push: true
           tags: |
-            andrejbajalski/internships-frontend:latest
-            andrejbajalski/internships-frontend:${{ github.sha }}
+            andrejbajalski/internships-frontend:1.0.0
 
       # Build & Push Backend
       - name: Build and push backend image
@@ -44,5 +43,4 @@ jobs:
           file: ./backend/Dockerfile
           push: true
           tags: |
-            andrejbajalski/internships-backend:latest
-            andrejbajalski/internships-backend:${{ github.sha }}
+            andrejbajalski/internships-backend:1.0.0
