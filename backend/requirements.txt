@@ -3,3 +3,4 @@ djangorestframework>=3.14
 mysqlclient>=2.2
 gunicorn>=21.2
 python-dotenv~=1.2.1
+django-cors-headers>=4.9.0
