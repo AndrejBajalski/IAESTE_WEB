@@ -8,6 +8,8 @@ router.register('internships', InternshipViewSet)
 router.register('applications', ApplicationViewSet)
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('api/', include(router.urls)),
     path('backend/admin/', admin.site.urls),
     path('backend/api/', include(router.urls)),
 ]
