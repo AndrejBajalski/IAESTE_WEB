@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+data:
+  mysql-port: "3307"
+  mysql-healthcheck-interval: "5s"
+  mysql-healthcheck-timeout: "5s"
+  mysql-healthcheck-retries: "5"
