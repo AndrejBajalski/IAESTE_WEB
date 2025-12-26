@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 class ApiService {
-    constructor(baseURL="http://localhost:8000/backend/api"){
+    constructor(baseURL="/backend/api"){
         this.baseURL = baseURL
     }
     
