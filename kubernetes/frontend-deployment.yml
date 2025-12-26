@@ -15,5 +15,6 @@ spec:
       containers:
         - name: frontend-cont
           image: andrejbajalski/internships-frontend:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 80

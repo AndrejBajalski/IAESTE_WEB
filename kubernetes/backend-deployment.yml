@@ -19,6 +19,7 @@ spec:
       containers:
         - name: backend-cont
           image: andrejbajalski/internships-backend:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
           volumeMounts:
