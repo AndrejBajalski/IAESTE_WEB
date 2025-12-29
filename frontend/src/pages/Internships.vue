@@ -5,25 +5,25 @@
 
     const apiService = new ApiService()
     const allInternships = ref([])
-    onMounted(async () => {
-        try {
-            allInternships.value = await apiService.getInternships()
-            console.log('Fetched internships:', allInternships.value)
-        }catch (error) {
-            console.error('Error fetching internships:', error)
-        }
-    })
+    // onMounted(async () => {
+    //     try {
+    //         allInternships.value = await apiService.getInternships()
+    //         console.log('Fetched internships:', allInternships.value)
+    //     }catch (error) {
+    //         console.error('Error fetching internships:', error)
+    //     }
+    // })
 </script>
 
 
 <template>
     <h1>All internships:</h1>
     <div>
-        <div class="internship-container" v-for="internship in allInternships" :key="internship.id">
+        <!-- <div class="internship-container" v-for="internship in allInternships" :key="internship.id">
             <h4>{{ internship.referent_number }}</h4>
             <div>{{ internship.company.name }}</div>
             <div>{{ internship.field }}</div> 
-        </div>
+        </div> -->
     </div>
 </template>
 
