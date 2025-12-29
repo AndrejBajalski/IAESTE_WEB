@@ -3,6 +3,7 @@ FROM node:lts-alpine AS build-stage
 WORKDIR /app
 COPY . .
 RUN npm install
+ENV VITE_API_BASE_URL=http://localhost/backend
 RUN npm run build
 # production stage
 FROM nginx:stable-alpine AS production-stage
