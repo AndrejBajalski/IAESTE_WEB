@@ -14,11 +14,11 @@ class Company(models.Model):
 class Internship(models.Model):
     FIELD_CHOICES = [
         ('IT', 'IT'),
-        ('Mechanical', 'Mechanical Engineering'),
-        ('Electrical', 'Electrical Engineering'),
+        ('Mechanical Engineering', 'Mechanical Engineering'),
+        ('Electrical Engineering', 'Electrical Engineering'),
         ('Architecture', 'Architecture'),
         ('Civil Engineering', 'Civil Engineering'),
-        ('Biomedical', 'Biomedical Engineering'),
+        ('Biomedical Engineering', 'Biomedical Engineering'),
         ('Marketing', 'Marketing'),
         ('Finance', 'Finance'),
     ]
