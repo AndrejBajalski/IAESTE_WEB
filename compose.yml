@@ -1,12 +1,41 @@
 services:
-  frontend:
-    image: internships-frontend
-    container_name: frontend_cont
+  # frontend:
+  #   container_name: frontend_cont
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - /app/node_modules
+  #   networks:
+  #     - frontend-network
+  #   depends_on:
+  #     backend:
+  #       condition: service_started
+
+  frontend-dev:
+    container_name: frontend_cont_dev
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     ports:
-      - "5173:80"
+      - "5173:5173"
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./frontend/package.json
+          target: /app/package.json
+        - action: restart
+          path: ./frontend/vite.config.js
+          target: /app/vite.config.js
+    volumes:
+      - /app/node_modules
     networks:
       - frontend-network
     depends_on:
@@ -14,7 +43,6 @@ services:
         condition: service_started
 
   backend:
-    image: internships-backend
     container_name: backend_cont
     build:
       context: ./backend
@@ -30,7 +58,7 @@ services:
       database:
         condition: service_healthy
     env_file:
-      - .env
+      - ./backend/.env
     deploy:
       resources:
         limits:
@@ -47,10 +75,9 @@ services:
     env_file:
       - .env
     environment:
-      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-      - MYSQL_DATABASE=${DB_NAME}
-      - MYSQL_PASSWORD=${DB_PASSWORD}
-      - MYSQL_TCP_PORT=${DB_PORT}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME_DEV}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - "3307:3306"
     healthcheck:
