@@ -53,11 +53,11 @@ class Application(models.Model):
         ('Completed', 'Completed internship'),
     ]
     internship = models.ForeignKey(Internship, on_delete=models.CASCADE)
-    intern = models.ForeignKey(Candidate, on_delete=models.CASCADE)
+    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
     applied_at = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=50, choices=applicationStatus)
+    status = models.CharField(max_length=50, choices=applicationStatus, default='Applied')
 
     def __str__(self):
-        return (f"Applicant: {self.intern.__str__()}\n"
+        return (f"Applicant: {self.candidate.__str__()}\n"
                 f"Company: {self.internship.__str__()}\n"
                 f"Status: {self.status}")

@@ -2,3 +2,5 @@
 db.sqlite3
 .gitignore
 .idea
+internship_app/migrations
+backend/__pycache__

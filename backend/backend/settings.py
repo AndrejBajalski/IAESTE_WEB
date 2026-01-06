@@ -1,5 +1,7 @@
 import os
 from pathlib import Path
+from pickle import APPEND
+
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -118,6 +120,8 @@ REST_FRAMEWORK = {
         "rest_framework.renderers.JSONRenderer",
     ]
 }
+
+APPEND_SLASH = False
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/

@@ -1,4 +1,4 @@
-from rest_framework import viewsets, filters
+from rest_framework import viewsets, filters, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Internship, Application
@@ -10,6 +10,9 @@ class InternshipViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'company__name', 'location', 'field']
 
+class InternshipDetailView(generics.RetrieveAPIView):
+    queryset = Internship.objects.all()
+    serializer_class = InternshipSerializer
 
 class ApplicationsList(APIView):
     def get(self, request, format=None):

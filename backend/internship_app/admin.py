@@ -18,8 +18,8 @@ class ApplicationAdmin(admin.ModelAdmin):
         'internship__field',
     )
     search_fields = (
-        'intern__name',
-        'intern__surname',
+        'candidate__name',
+        'candidate__surname',
         'internship__referent_number',
     )
     readonly_fields = ('applied_at',)

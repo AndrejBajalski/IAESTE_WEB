@@ -19,8 +19,18 @@ class CandidateSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ApplicationSerializer(serializers.ModelSerializer):
+    candidate = CandidateSerializer()
     internship = InternshipSerializer(read_only=True)
-    intern = CandidateSerializer(read_only=True)
     class Meta:
         model = Application
-        fields = '__all__'
+        fields = ['internship', 'candidate']
+
+    def create(self, validated_data):
+        candidate_data = validated_data.pop('candidate')
+        print("Candidate data: ", candidate_data)
+        internship = validated_data.pop('internship')
+        print("Internship data: ", internship)
+        candidate = Candidate.objects.create(**candidate_data)
+        application = Application.objects.create(internship=internship, candidate=candidate, status='Applied')
+        print("Successfully created application", application)
+        return application

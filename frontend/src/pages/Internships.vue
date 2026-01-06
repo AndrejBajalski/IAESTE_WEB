@@ -1,4 +1,5 @@
 ]<script setup>
+    import { router } from '@/routing/router'
     import { ApiService } from '@/services/api'
     import { onMounted } from 'vue'
     import { ref } from 'vue'
@@ -14,7 +15,12 @@
         }
     })
     const handleAction = (internship) => {
-        alert(`Internship ${internship.referent_number} selected!`)
+        console.log(`Internship ${internship.referent_number} selected!`)
+        router.push({
+            name: 'ApplyForm',
+            params: {id: internship.id},
+            state: {internship: internship}
+        })
     }
 </script>
 

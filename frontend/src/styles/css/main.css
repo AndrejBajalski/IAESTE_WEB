@@ -1,4 +1,7 @@
-body{
+#app-body{
     font-family: Helvetica, Arial, Helvetica, sans-serif;
     padding: 2rem;
+}
+body{
+    margin: 0;
 }
