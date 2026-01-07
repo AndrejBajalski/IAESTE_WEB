@@ -12,21 +12,21 @@ spec:
       labels:
         app: backend
     spec:
-      volumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: mysql-pvc
+      # volumes:
+      #   - name: data
+      #     persistentVolumeClaim:
+      #       claimName: mysql-pvc
       containers:
         - name: backend-cont
           image: andrejbajalski/internships-backend:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
-          volumeMounts:
-            - name: data
-              mountPath: /app/data
+          # volumeMounts:
+          #   - name: data
+          #     mountPath: /app/data
           env:
-            - name: DB_HOST
+            - name: DB_HOST_DEV
               value: "mysql-service"
             - name: DB_NAME
               valueFrom:
@@ -43,7 +43,27 @@ spec:
                 secretKeyRef:
                   name: mysql-secret
                   key: mysql-password
-            - name: DB_PORT
+            - name: DJANGO_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: django-secrets
+                  key: DJANGO_SECRET_KEY
+            - name: DJANGO_SUPERUSER_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: django-secrets
+                  key: DJANGO_SUPERUSER_USERNAME
+            - name: DJANGO_SUPERUSER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: django-secrets
+                  key: DJANGO_SUPERUSER_PASSWORD
+            - name: DJANGO_SUPERUSER_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: django-secrets
+                  key: DJANGO_SUPERUSER_EMAIL
+            - name: DB_PORT_DEV
               valueFrom:
                 configMapKeyRef:
                   name: mysql-config

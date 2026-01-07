@@ -52,9 +52,16 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 # CORS_ALLOW_CREDENTIALS = True
 
-# CSRF_TRUSTED_ORIGINS = [
-#     "http://localhost:5173",
-# ]
+# 1. Trust the Traefik proxy headers
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# 2. Ensure cookies work on the sub-path
+SESSION_COOKIE_PATH = '/backend/'
+CSRF_COOKIE_PATH = '/backend/'
+# 3. If you are using localhost (HTTP), ensure these are False
+# If you eventually move to HTTPS, set these to True
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+CSRF_TRUSTED_ORIGINS = ['http://localhost', 'http://127.0.0.1']
 
 ROOT_URLCONF = 'backend.urls'
 
