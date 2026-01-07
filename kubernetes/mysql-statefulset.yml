@@ -48,7 +48,7 @@ spec:
             memory: "512Mi"
             cpu: "500m"
         volumeMounts:
-        - name: mysql-data
+        - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
         livenessProbe:
           exec:
@@ -71,7 +71,15 @@ spec:
           initialDelaySeconds: 5
           periodSeconds: 5
           timeoutSeconds: 1
-      volumes:
-      - name: mysql-data
-        persistentVolumeClaim:
-          claimName: mysql-pvc
+      # volumes:
+      # - name: mysql-data
+      #   persistentVolumeClaim:
+      #     claimName: mysql-pvc
+  volumeClaimTemplates:
+  - metadata:
+      name: mysql-persistent-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 5Gi
