@@ -13,7 +13,7 @@ class ApiService {
                     .catch(error => console.log('Error fetching data from API:', error ))
     }
     async getInternships(params = {}) {
-        const url = this.baseURL + "/api/internships"
+        const url = this.baseURL + "/api/internships/"
         return axios.get(url)
                     .then(response => response.data)
                     .catch(error => console.log('Error fetching data from API:', error ))
