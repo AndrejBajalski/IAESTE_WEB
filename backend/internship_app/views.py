@@ -1,5 +1,6 @@
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets, filters, generics
+from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Internship, Application
@@ -17,6 +18,7 @@ class InternshipDetailView(generics.RetrieveAPIView):
     serializer_class = InternshipSerializer
 
 class ApplicationsList(APIView):
+    permission_classes = [AllowAny]
     def get(self, request, format=None):
         applications = Application.objects.all()
         serializer = ApplicationSerializer(applications, many=True)
