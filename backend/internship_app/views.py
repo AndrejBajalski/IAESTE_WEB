@@ -1,8 +1,10 @@
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets, filters, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Internship, Application
 from .serializers import InternshipSerializer, ApplicationSerializer
+from django.utils.decorators import method_decorator
 
 class InternshipViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Internship.objects.select_related('company').all()
@@ -19,6 +21,7 @@ class ApplicationsList(APIView):
         applications = Application.objects.all()
         serializer = ApplicationSerializer(applications, many=True)
         return Response(serializer.data)
+    @method_decorator(csrf_exempt, name='dispatch')
     def post(self, request, format=None):
         serializer = ApplicationSerializer(data=request.data)
         if serializer.is_valid():
