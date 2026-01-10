@@ -12,22 +12,30 @@ spec:
       labels:
         app: backend
     spec:
-      # volumes:
-      #   - name: data
-      #     persistentVolumeClaim:
-      #       claimName: mysql-pvc
       containers:
         - name: backend-cont
           image: andrejbajalski/internships-backend:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
-          # volumeMounts:
-          #   - name: data
-          #     mountPath: /app/data
+          envFrom:
+            - secretRef: 
+                name: django-secrets
+            - configMapRef:
+                name: mysql-config
           env:
             - name: DB_HOST_DEV
               value: "mysql-service"
+            - name: DB_PORT_DEV
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-config
+                  key: mysql-port
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql-root-password
             - name: DB_NAME
               valueFrom:
                 secretKeyRef:
@@ -38,34 +46,4 @@ spec:
                 secretKeyRef:
                   name: mysql-secret
                   key: mysql-user
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mysql-secret
-                  key: mysql-password
-            - name: DJANGO_SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: django-secrets
-                  key: DJANGO_SECRET_KEY
-            - name: DJANGO_SUPERUSER_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: django-secrets
-                  key: DJANGO_SUPERUSER_USERNAME
-            - name: DJANGO_SUPERUSER_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: django-secrets
-                  key: DJANGO_SUPERUSER_PASSWORD
-            - name: DJANGO_SUPERUSER_EMAIL
-              valueFrom:
-                secretKeyRef:
-                  name: django-secrets
-                  key: DJANGO_SUPERUSER_EMAIL
-            - name: DB_PORT_DEV
-              valueFrom:
-                configMapKeyRef:
-                  name: mysql-config
-                  key: mysql-port
 

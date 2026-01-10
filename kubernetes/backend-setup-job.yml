@@ -1,0 +1,48 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: backend-setup-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: setup
+        image: andrejbajalski/internships-backend:latest
+        imagePullPolicy: Always
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            python manage.py migrate --noinput
+            python manage.py shell <<EOF
+            from django.contrib.auth import get_user_model
+            User = get_user_model()
+            if not User.objects.filter(username='admin').exists():
+                User.objects.create_superuser('admin', 'admin@example.com', 'Test123!')
+        envFrom:
+          - secretRef:
+              name: django-secrets
+        env:
+          - name: DB_HOST_DEV
+            value: "mysql-service"
+          - name: DB_PORT_DEV
+            valueFrom:
+              configMapKeyRef:
+                name: mysql-config
+                key: mysql-port
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-secret
+                key: mysql-root-password
+          - name: DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: mysql-secret
+                key: mysql-database
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: mysql-secret
+                key: mysql-user
+      restartPolicy: OnFailure
+  backoffLimit: 4
