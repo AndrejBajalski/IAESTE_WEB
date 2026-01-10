@@ -20,7 +20,7 @@ class CandidateSerializer(serializers.ModelSerializer):
 
 class ApplicationSerializer(serializers.ModelSerializer):
     candidate = CandidateSerializer()
-    internship = InternshipSerializer(read_only=True)
+    internship = serializers.PrimaryKeyRelatedField(queryset=Internship.objects.all())
     class Meta:
         model = Application
         fields = ['internship', 'candidate']
